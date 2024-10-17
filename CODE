@@ -1,0 +1,238 @@
+// CODE STARTS
+
+None selected 
+
+Skip to content
+Using Symbiosis Institute of Technology Mail with screen readers
+kailash.shaw@sitpune.edu.in 
+Conversations
+
+Kailash Shaw
+kailash.shaw@sitpune.edu.in
+kailash.shaw@sitpune.edu.in. Press tab to insert.
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define _CRT_SECURE_NO_WARNINGS 
+
+// Structure to store donor details
+typedef struct {
+    char name[50];
+    char bloodGroup[5];
+    char phone[15];
+    char location[50];
+} Donor;
+
+// Define the Node struct for the BST
+typedef struct Node {
+    Donor donor;
+    struct Node* left;
+    struct Node* right;
+} Node;
+
+// Function to create a new node
+struct Node* createNode(Donor donor) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->donor = donor;
+    newNode->left = newNode->right = NULL;
+    return newNode;
+}
+
+// Insert donor into the BST
+struct Node* insert(Node* root, Donor donor) {
+    if (root == NULL) {
+        return createNode(donor);
+    }
+
+    // Sorting based on blood group and location
+    int cmp = strcmp(donor.bloodGroup, root->donor.bloodGroup);
+    if (cmp == 0) {
+        cmp = strcmp(donor.location, root->donor.location);
+    }
+
+    if (cmp < 0) {
+        root->left = insert(root->left, donor);
+    }
+    else {
+        root->right = insert(root->right, donor);
+    }
+
+    return root;
+}
+
+// Search for a donor by blood group and location
+struct Node* search(Node* root, char* bloodGroup, char* location) {
+    if (root == NULL) {
+        return NULL;
+    }
+
+    int cmp = strcmp(bloodGroup, root->donor.bloodGroup);
+    if (cmp == 0) {
+        cmp = strcmp(location, root->donor.location);
+    }
+
+    if (cmp == 0) {
+        return root;
+    }
+    else if (cmp < 0) {
+        return search(root->left, bloodGroup, location);
+    }
+    else {
+        return search(root->right, bloodGroup, location);
+    }
+}
+
+// Input donor details
+void inputDonor(Donor* donor) {
+    printf("Enter Name: ");
+    scanf(" %[^\n]%*c", donor->name);
+    printf("Enter Blood Group (e.g., A+, B-): ");
+    scanf("%s", donor->bloodGroup);
+    printf("Enter Phone Number: ");
+    scanf("%s", donor->phone);
+    printf("Enter Location: ");
+    scanf(" %[^\n]%*c", donor->location);
+}
+
+// Display donor details
+void displayDonor(Donor donor) {
+    printf("\n--- Donor Found ---\n");
+    printf("Name: %s\n", donor.name);
+    printf("Blood Group: %s\n", donor.bloodGroup);
+    printf("Phone: %s\n", donor.phone);
+    printf("Location: %s\n", donor.location);
+}
+
+void insertSampleDonors(Node** root) {
+    // Pune donors
+    *root = insert(*root, (Donor) { "Alice", "A+", "1234567890", "Pune" });
+    *root = insert(*root, (Donor) { "Aisha", "A+", "2345678901", "Pune" });
+    *root = insert(*root, (Donor) { "Aarav", "A+", "3456789012", "Pune" });
+    *root = insert(*root, (Donor) { "Arjun", "A+", "4567890123", "Pune" });
+    *root = insert(*root, (Donor) { "Bhumi", "B+", "5678901234", "Pune" });
+    *root = insert(*root, (Donor) { "Bharat", "B+", "6789012345", "Pune" });
+    *root = insert(*root, (Donor) { "Bina", "B+", "7890123456", "Pune" });
+    *root = insert(*root, (Donor) { "Bhavesh", "B+", "8901234567", "Pune" });
+    *root = insert(*root, (Donor) { "Omkar", "O+", "9012345678", "Pune" });
+    *root = insert(*root, (Donor) { "Om", "O+", "1122334455", "Pune" });
+    *root = insert(*root, (Donor) { "Ojas", "O+", "2233445566", "Pune" });
+    *root = insert(*root, (Donor) { "Ovi", "O+", "3344556677", "Pune" });
+    *root = insert(*root, (Donor) { "Ananya", "AB+", "4455667788", "Pune" });
+    *root = insert(*root, (Donor) { "Amit", "AB+", "5566778899", "Pune" });
+    *root = insert(*root, (Donor) { "Anil", "AB+", "6677889900", "Pune" });
+    *root = insert(*root, (Donor) { "Alok", "AB+", "7788990011", "Pune" });
+    *root = insert(*root, (Donor) { "Aryan", "A-", "8899001122", "Pune" });
+    *root = insert(*root, (Donor) { "Ankita", "A-", "9900112233", "Pune" });
+    *root = insert(*root, (Donor) { "Binny", "B-", "1029384756", "Pune" });
+    *root = insert(*root, (Donor) { "Bhaskar", "B-", "1234567891", "Pune" });
+    *root = insert(*root, (Donor) { "Omisha", "O-", "2345678902", "Pune" });
+    *root = insert(*root, (Donor) { "Omprakash", "O-", "3456789013", "Pune" });
+    *root = insert(*root, (Donor) { "Amrita", "AB-", "4567890124", "Pune" });
+    *root = insert(*root, (Donor) { "Armaan", "AB-", "5678901235", "Pune" });
+
+    // Mumbai donors(Donar)   o
+    *root = insert(*root, (Donor) { "Aditya", "A+", "1234509876", "Mumbai" });
+    *root = insert(*root, (Donor) { "Aarti", "A+", "2345609876", "Mumbai" });
+    *root = insert(*root, (Donor) { "Anjali", "A+", "3456709876", "Mumbai" });
+    *root = insert(*root, (Donor) { "Aarav", "A+", "4567809876", "Mumbai" });
+    *root = insert(*root, (Donor) { "Bhuvan", "B+", "5678909876", "Mumbai" });
+    *root = insert(*root, (Donor) { "Bharti", "B+", "6789009876", "Mumbai" });
+    *root = insert(*root, (Donor) { "Bharat", "B+", "7890109876", "Mumbai" });
+    *root = insert(*root, (Donor) { "Bhavna", "B+", "8901209876", "Mumbai" });
+    *root = insert(*root, (Donor) { "Omkar", "O+", "9012309876", "Mumbai" });
+    *root = insert(*root, (Donor) { "Onkar", "O+", "1122330099", "Mumbai" });
+    *root = insert(*root, (Donor) { "Omisha", "O+", "2233440099", "Mumbai" });
+    *root = insert(*root, (Donor) { "Omprakash", "O+", "3344550099", "Mumbai" });
+    *root = insert(*root, (Donor) { "Ankit", "AB+", "4455660099", "Mumbai" });
+    *root = insert(*root, (Donor) { "Anurag", "AB+", "5566770099", "Mumbai" });
+    *root = insert(*root, (Donor) { "Amol", "AB+", "6677880099", "Mumbai" });
+    *root = insert(*root, (Donor) { "Anand", "AB+", "7788990099", "Mumbai" });
+    *root = insert(*root, (Donor) { "Avni", "A-", "8899000099", "Mumbai" });
+    *root = insert(*root, (Donor) { "Ajay", "A-", "9900110099", "Mumbai" });
+    *root = insert(*root, (Donor) { "Bhavesh", "B-", "1029380099", "Mumbai" });
+    *root = insert(*root, (Donor) { "Bhavna", "B-", "1122334455", "Mumbai" });
+    *root = insert(*root, (Donor) { "Om", "O-", "2233445566", "Mumbai" });
+    *root = insert(*root, (Donor) { "Ojas", "O-", "3344556677", "Mumbai" });
+    *root = insert(*root, (Donor) { "Anaya", "AB-", "4455667788", "Mumbai" });
+    *root = insert(*root, (Donor) { "Anmol", "AB-", "5566778899", "Mumbai" });
+
+    // Nashik donors(Donar)   o
+    *root = insert(*root, (Donor) { "Anjali", "A+", "5678904321", "Nashik" });
+    *root = insert(*root, (Donor) { "Aarush", "A+", "6789014321", "Nashik" });
+    *root = insert(*root, (Donor) { "Arpit", "A+", "7890124321", "Nashik" });
+    *root = insert(*root, (Donor) { "Asha", "A+", "8901234321", "Nashik" });
+    *root = insert(*root, (Donor) { "Bhavya", "B+", "9012344321", "Nashik" });
+    *root = insert(*root, (Donor) { "Bhumi", "B+", "1122335566", "Nashik" });
+    *root = insert(*root, (Donor) { "Biplab", "B+", "2233446677", "Nashik" });
+    *root = insert(*root, (Donor) { "Bijoy", "B+", "3344557788", "Nashik" });
+    *root = insert(*root, (Donor) { "Omkar", "O+", "4455668899", "Nashik" });
+    *root = insert(*root, (Donor) { "Omisha", "O+", "5566779900", "Nashik" });
+    *root = insert(*root, (Donor) { "Omprakash", "O+", "6677880011", "Nashik" });
+    *root = insert(*root, (Donor) { "Ojas", "O+", "7788991122", "Nashik" });
+    *root = insert(*root, (Donor) { "Amrita", "AB+", "8899002233", "Nashik" });
+    *root = insert(*root, (Donor) { "Anuradha", "AB+", "9900113344", "Nashik" });
+    *root = insert(*root, (Donor) { "Anand", "AB+", "1029384756", "Nashik" });
+    *root = insert(*root, (Donor) { "Anil", "AB+", "1234567891", "Nashik" });
+    *root = insert(*root, (Donor) { "Arya", "A-", "2345678902", "Nashik" });
+    *root = insert(*root, (Donor) { "Ajit", "A-", "3456789013", "Nashik" });
+    *root = insert(*root, (Donor) { "Bharat", "B-", "4567890124", "Nashik" });
+    *root = insert(*root, (Donor) { "Bimal", "B-", "5678901235", "Nashik" });
+    *root = insert(*root, (Donor) { "Om", "O-", "6789012346", "Nashik" });
+    *root = insert(*root, (Donor) { "Omkar", "O-", "7890123457", "Nashik" });
+    *root = insert(*root, (Donor) { "Alok", "AB-", "8901234568", "Nashik" });
+    *root = insert(*root, (Donor) { "Anita", "AB-", "9012345679", "Nashik" });
+
+    // Nagpur donors(Donar)
+    *root = insert(*root, (Donor) { "Aryan", "A+", "1122334455", "Nagpur" });
+    *root = insert(*root, (Donor) { "Ankita", "A+", "2233445566", "Nagpur" });
+    *root = insert(*root, (Donor) { "Aarav", "A+", "3344556677", "Nagpur" });
+    *root = insert(*root, (Donor) { "Arjun", "A+", "4455667788", "Nagpur" });
+    *root = insert(*root, (Donor) { "Bhavesh", "B+", "5566778899", "Nagpur" });
+    *root = insert(*root, (Donor) { "Bhumi", "B+", "6677889900", "Nagpur" });
+    *root = insert(*root, (Donor) { "Bharat", "B+", "7788990011", "Nagpur" });
+    *root = insert(*root, (Donor) { "Bhaskar", "B+", "8899001122", "Nagpur" });
+    *root = insert(*root, (Donor) { "Omkar", "O+", "9900112233", "Nagpur" });
+    *root = insert(*root, (Donor) { "Omisha", "O+", "1029384756", "Nagpur" });
+    *root = insert(*root, (Donor) { "Ovi", "O+", "1122335566", "Nagpur" });
+    *root = insert(*root, (Donor) { "Onkar", "O+", "2233446677", "Nagpur" });
+    *root = insert(*root, (Donor) { "Amit", "AB+", "3344557788", "Nagpur" });
+    *root = insert(*root, (Donor) { "Amrita", "AB+", "4455668899", "Nagpur" });
+    *root = insert(*root, (Donor) { "Anurag", "AB+", "5566779900", "Nagpur" });
+    *root = insert(*root, (Donor) { "Arnav", "AB+", "6677880011", "Nagpur" });
+    *root = insert(*root, (Donor) { "Anaya", "A-", "7788991122", "Nagpur" });
+    *root = insert(*root, (Donor) { "Ajay", "A-", "8899002233", "Nagpur" });
+    *root = insert(*root, (Donor) { "Binny", "B-", "9900113344", "Nagpur" });
+    *root = insert(*root, (Donor) { "Bharti", "B-", "1029384757", "Nagpur" });
+    *root = insert(*root, (Donor) { "Omprakash", "O-", "1234567892", "Nagpur" });
+    *root = insert(*root, (Donor) { "Om", "O-", "2345678903", "Nagpur" });
+    *root = insert(*root, (Donor) { "Anmol", "AB-", "3456789014", "Nagpur" });
+    *root = insert(*root, (Donor) { "Anirudh", "AB-", "4567890125", "Nagpur" });
+}
+
+
+
+int main() {
+    Node* root = NULL;
+    char searchBloodGroup[5], searchLocation[50];
+
+
+    insertSampleDonors(&root);
+
+
+    printf("Enter required Blood Group: ");
+    scanf("%s", searchBloodGroup);
+    printf("Enter required Location (Mumbai/Pune/Nashik/Nagpur) : ");
+    scanf(" %[^\n]%*c", searchLocation);
+
+    Node* found = search(root, searchBloodGroup, searchLocation);
+    if (found != NULL) {
+        displayDonor(found->donor);
+    }
+    else {
+        printf("No donor found for the given blood group and location.\n");
+    }
+
+    return 0;
+}
+
+// CODE ENDS
