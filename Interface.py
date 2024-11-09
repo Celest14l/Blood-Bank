@@ -18,11 +18,11 @@ locations = ["Pune", "Mumbai", "Nagpur", "Nashik", "Delhi"]
 donors = []
 for location in locations:
     for blood_group in blood_groups:
-        for i in range(10):  # 10 donors per blood group per location
+        for i in range(10):  
             donors.append({
                 "name": random.choice(donor_names),
                 "bloodGroup": blood_group,
-                "phone": f"+91 {random.randint(7000000000, 9999999999)}",  # Fake phone numbers
+                "phone": f"+91 {random.randint(7000000000, 9999999999)}",  # for creating fake numbers
                 "location": location
             })
 
@@ -43,14 +43,13 @@ with gr.Blocks() as interface:
     blood_group_input = gr.Dropdown(label="Select Blood Group", choices=blood_groups, value="A+")
     location_input = gr.Dropdown(label="Select Location", choices=locations, value="Mumbai")
     
-    # Reactive elements
     output = gr.Textbox(label="Donors Found", lines=10, placeholder="Search results will appear here...")
     
-    # Button to trigger search
+    # Button to search
     search_button = gr.Button("Search Donor")
     
     # Button function
     search_button.click(fn=search_donor, inputs=[blood_group_input, location_input], outputs=output)
 
-# Launch the interface
+# Launching the interface
 interface.launch()
